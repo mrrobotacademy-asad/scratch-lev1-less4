@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr Robot Academy - التحدي الذكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #00cec9;
+            --correct: #2ed573;
+            --wrong: #ff4757;
+            --warning: #f1c40f;
+            --bg: #0f0c29;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --radius: 15px;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at center, #1e1b4b, #0f0c29);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .header { text-align: center; padding: 25px; width: 100%; }
+        
+        .logo-img { 
+            width: 220px; 
+            height: auto; 
+            max-height: 100px;
+            object-fit: contain;
+            border: 3px solid var(--secondary);
+            border-radius: 10px;
+            padding: 5px;
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(0,206,201,0.3);
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 25px;
+            width: 90%;
+            max-width: 800px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        /* --- تحسين قسم الشرح التفاعلي --- */
+        .explanation-slider {
+            position: relative;
+            background: rgba(0,0,0,0.3);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 5px solid var(--primary);
+            transition: 0.3s;
+        }
+
+        .explanation-card h3 { color: var(--secondary); margin-top: 0; font-size: 1.6rem; }
+        
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-btn:disabled { background: #444; cursor: not-allowed; }
+
+        /* --- بقية العناصر --- */
+        .code-block {
+            background: #1e1e1e;
+            color: #58D68D;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            direction: ltr;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 1.1rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .status-bar {
+            display: flex; justify-content: space-between; background: rgba(0,0,0,0.4);
+            padding: 15px; border-radius: var(--radius); margin-bottom: 20px; font-weight: bold;
+        }
+
+        .code-display {
+            background: #000; padding: 25px; border-radius: var(--radius); font-family: 'Fira Code', monospace;
+            direction: ltr; text-align: left; border-left: 5px solid var(--primary); margin-bottom: 20px; font-size: 1.4rem;
+        }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .option-btn {
+            background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1);
+            padding: 18px; color: white; cursor: pointer; border-radius: var(--radius); transition: 0.3s;
+            font-size: 1.1rem; font-family: 'Cairo';
+        }
+        .option-btn:hover { background: var(--primary); transform: scale(1.02); }
+        .option-btn.selected { background: var(--primary); border-color: white; }
+
+        .btn-main {
+            background: linear-gradient(to right, var(--primary), #8e44ad);
+            color: white; border: none; padding: 18px 40px;
+            cursor: pointer; font-weight: 900; border-radius: 50px; font-size: 1.3rem;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .hidden { display: none !important; }
+        input[type="text"] {
+            width: 80%; padding: 15px; background: rgba(0,0,0,0.3); border: 2px solid var(--primary); color: white; border-radius: var(--radius); text-align: center; font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="logo.png" alt="Mr Robot Logo" class="logo-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/220x80/6c5ce7/ffffff?text=MY+LOGO';">
+    <h1 style="margin:15px 0; font-size: 2.2rem;">Mr Robot Academy</h1><br><h6 style="margin:2px 0; font-size: 1.2rem;">مهندس/ أندرو مجدي -  Phone: 01285529570   </h6>
+</div>
+
+<div class="container">
+    <div id="start-screen">
+        <h2 style="color:var(--warning);">🚀 رحلة تعلم بايثون الممتعة</h2>
+        
+        <div class="explanation-slider">
+            <div id="slide-content">
+                </div>
+            <div class="slider-nav">
+                <button class="nav-btn" onclick="moveSlide(-1)" id="prevSlide">السابق</button>
+                <span id="slide-num" style="align-self:center; font-weight:bold;">1 / 15</span>
+                <button class="nav-btn" onclick="moveSlide(1)" id="nextSlide">التالي</button>
+            </div>
+        </div>
+
+        <div style="margin: 30px 0;">
+            <input type="text" id="username" placeholder="اكتب اسمك يا بطل هنا...">
+        </div>
+        
+        <button class="btn-main" onclick="initQuiz()">ابدأ تحدي الـ 20 سؤال 🎯</button>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+        <div class="status-bar">
+            <div>⏰ <span id="timer-val">00:00</span></div>
+            <div id="progress-text" style="color:var(--secondary)">السؤال 1 / 20</div>
+            <div>⭐ <span id="score-val">0</span></div>
+        </div>
+        
+        <div class="question-zone">
+            <h3 id="q-text" style="font-size: 1.4rem;"></h3>
+            <div class="code-display" id="q-code"></div>
+            
+            <div id="options-container" class="options-grid"></div>
+            
+            <div id="input-container" class="hidden">
+                <input type="text" id="user-code-input" placeholder="اكتب إجابتك هنا...">
+            </div>
+
+            <div id="hint-box" style="margin-top:20px; display:none; color:var(--warning); background:rgba(0,0,0,0.3); padding:10px; border-radius:10px;">
+                💡 تلميحة: <span id="hint-text"></span>
+            </div>
+
+            <div class="control-group">
+                <button class="option-btn" style="background:#555; padding: 10px 20px;" onclick="navigate(-1)" id="prev-btn">⬅️ السابق</button>
+                <button class="option-btn" style="background:var(--warning); color:#000; padding: 10px 20px;" onclick="skipQuestion()">⏭️ تخطي</button>
+                <button class="option-btn" style="background:var(--wrong); padding: 10px 20px;" onclick="revealAnswer()">🔑 إجابة</button>
+                <button class="btn-main" style="flex-grow:1;" onclick="handleStep()">التحقق من الإجابة ✅</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-screen" class="hidden">
+        <h1 style="font-size: 4rem;">🏆</h1>
+        <h2 id="congrats-msg">ممتاز!</h2>
+        <p id="final-stats" style="font-size:1.5rem"></p>
+        <button class="btn-main" onclick="location.reload()">جولة جديدة 🔄</button>
+    </div>
+</div>
+
+<script>
+   // مصفوفة الشرح - 15 نقطة مبسطة لدرس سكراتش
+const detailedExplanation = [
+    {
+        title: "العلم الأخضر.. زرار البداية 🚩",
+        code: "When Green Flag Clicked",
+        desc: "ده أهم زرار، أول ما بندوس عليه بنقول للكود 'اصحى يا بطل وابدأ الشغل'. من غيره الكائن هيفضل واقف مكانه مش فاهم المفروض يعمل إيه."
+    },
+    {
+        title: "تصفير العداد 0️⃣",
+        code: "set score to 0",
+        desc: "ده معناه أول ما اللعبة تبدأ، خلّي النقط صفر عشان اللاعب يبدأ من جديد، ميفضلش واخد السكور بتاع اللعبة اللي فاتت."
+    },
+    {
+        title: "الحلقة اللي مابتخلصش 🔄",
+        code: "Forever",
+        desc: "دي حلقة سحرية، أي حاجة بنحطها جواها بتفضل تتكرر للأبد، وده اللي بيخلي التفاحة تفضل تقع من السما طول ما اللعبة شغالة."
+    },
+    {
+        title: "النط العشوائي في السما 🎲",
+        code: "go to x: pick random",
+        desc: "بيخلي التفاحة تظهر في أي مكان بالعرض (يمين أو شمال) فجأة، وده بيخلي اللعبة فيها مفاجآت واللاعب ميتوقعش مكانها."
+    },
+    {
+        title: "الارتفاع الثابت 🔝",
+        code: "y: 180",
+        desc: "رقم 180 ده معناه إن التفاحة دايمًا هتبدأ من فوق خالص في الشاشة قبل ما تقع."
+    },
+    {
+        title: "الظهور المفاجئ 👁️",
+        code: "show",
+        desc: "البلوك ده بيخلي التفاحة تظهر وتكون باينة للاعب بعد ما كانت مستخبية عشان يقدر يلحقها."
+    },
+    {
+        title: "بداية السقوط 🍎",
+        code: "repeat (50)",
+        desc: "هنا بنقول للتفاحة 'كرري اللي جواكي 50 مرة'، وده اللي هيخليها تنزل لتحت حبة حبة بدل ما تنزل فجأة."
+    },
+    {
+        title: "سرعة النزول 🐾",
+        code: "move 10 steps",
+        desc: "البلوك ده هو اللي بيخلي التفاحة تتحرك فعلياً، وبما إنها جوه 'التكرار' فهي هتمشي 10 خطوات في كل مرة."
+    },
+    {
+        title: "لحظة الاصطدام 🥣",
+        code: "if touching Bowl then",
+        desc: "ده هو 'الشرط'، البرنامج بيسأل: 'يا تفاحة، هل أنتي دلوقتي لمستي السلطانية اللي تحت؟'."
+    },
+    {
+        title: "مكافأة اللاعب 🏆",
+        code: "change score by 1",
+        desc: "لو التفاحة لمست السلطانية فعلاً، بنزود نقطة واحدة للاعب في العداد عشان نحمسه."
+    },
+    {
+        title: "الاختفاء السريع 👻",
+        code: "hide",
+        desc: "بعد ما اللاعب ياخد النقطة، بنقول للتفاحة 'اختفي' عشان تبان إن اللاعب أكلها أو جمعها خلاص."
+    },
+    {
+        title: "الترتيب الذكي 🧱",
+        code: "Logic",
+        desc: "لاحظ إننا حاطين الـ 'if' جوه الـ 'repeat' عشان البرنامج يشيك على اللمس في كل لحظة والتفاحة بتقع."
+    },
+    {
+        title: "المتغيرات (Variables) 📊",
+        code: "Score",
+        desc: "كلمة 'score' دي زي مخزن بنشيل فيه رقم النقط، ونقدر نغيره في أي وقت زي ما زودناه هنا."
+    },
+    {
+        title: "الألوان بتسهل حياتنا 🎨",
+        code: "Categories",
+        desc: "البلوكات البرتقالي للتحكم، والصفراء للأحداث، والزرقاء للحركة.. الألوان دي بتخلينا منتهش وإحنا بنبرمج."
+    },
+    {
+        title: "مسرح الأحداث 🎭",
+        code: "Stage",
+        desc: "كل اللي بنعمله ده بيبان على الشاشة الكبيرة اللي فوق، وده اللي بيخلينا نشوف اللعبة حية قدامنا."
+    }
+];
+const questions = [
+    { type: 'select', q: 'إيه اللي بيحصل للسكور (score) أول ما ندوس على العلم الأخضر؟', options: ['بيزيد 10', 'بيرجع صفر', 'بيفضل زي ما هو'], ans: 'بيرجع صفر', hint: 'بص على بلوك set score' },
+    { type: 'select', q: 'بلوك Forever بيخلي التفاحة تقع كام مرة؟', options: ['مرة واحدة', 'للأبد', '50 مرة'], ans: 'للأبد', hint: 'كلمة Forever يعني طول الوقت' },
+    { type: 'input', q: 'التفاحة بتبدأ تقع من ارتفاع y بيساوي كام؟', ans: '180', hint: 'الرقم مكتوب جنب حرف y' },
+    { type: 'select', q: 'أمر pick random بيخلي التفاحة تظهر في أماكن؟', options: ['ثابتة', 'متغيرة وعشوائية'], ans: 'متغيرة وعشوائية', hint: 'Random يعني حظ' },
+    { type: 'input', q: 'لو التفاحة لمست السلطانية، السكور هيزيد بمقدار كام؟', ans: '1', hint: 'بص على الرقم اللي جنب score by' },
+    { type: 'select', q: 'إيه اسم الكائن اللي التفاحة لازم تلمسه عشان ناخد نقطة؟', options: ['Bowl', 'Apple', 'Cat'], ans: 'Bowl', hint: 'مكتوب جوه بلوك touching' },
+    { type: 'input', q: 'إيه البلوك اللي بيخلي التفاحة تختفي بعد ما نلمسها؟', ans: 'hide', hint: 'عكس كلمة show' },
+    { type: 'select', q: 'لو شيلنا بلوك show، هل هنعرف نشوف التفاحة وهي بتقع؟', options: ['لأ', 'أيوة'], ans: 'لأ', hint: 'show يعني اظهر' },
+    { type: 'input', q: 'الرقم بتاع repeat في الكود ده هو كام؟', ans: '50', hint: 'مكتوب جوه الدائرة البيضاء' },
+    { type: 'select', q: 'بلوك "if touching Bowl" لونه إيه؟', options: ['أصفر', 'برتقالي', 'أزرق'], ans: 'برتقالي', hint: 'بلوكات التحكم Control' },
+    { type: 'input', q: 'محور x بيحدد مكان التفاحة فين (بالعرض ولا بالطول)؟', ans: 'بالعرض', hint: 'يمين وشمال' },
+    { type: 'select', q: 'ليه بنحط "if" جوه "repeat"؟', options: ['عشان يشيك على اللمس طول ما هي بتقع', 'عشان السكور يفضل صفر'], ans: 'عشان يشيك على اللمس طول ما هي بتقع', hint: 'التكرار بيخلينا نراقب الحركة' },
+    { type: 'input', q: 'كم خطوة بتمشيها التفاحة في المرة الواحدة (move)؟', ans: '10', hint: 'بص على رقم الخطوات' },
+    { type: 'select', q: 'بلوك "set score to 0" موجود فين؟', options: ['جوه الـ Forever', 'برا الـ Forever من فوق'], ans: 'برا الـ Forever من فوق', hint: 'عشان يتصفر مرة واحدة بس في الأول' },
+    { type: 'input', q: 'إيه هو الزرار اللي لونه أخضر وبيدأ اللعبة؟', ans: 'العلم الأخضر', hint: 'Green Flag' },
+    { type: 'select', q: 'كلمة "score" في الكود ده بنسميها إيه؟', options: ['متغير (Variable)', 'حركة (Motion)'], ans: 'متغير (Variable)', hint: 'حاجة بنخزن فيها رقم بيتغير' },
+    { type: 'input', q: 'لو غيرنا change score وخليناها 10، اللاعب هياخد كام نقطة؟', ans: '10', hint: 'العدد اللي بنكتبه هو اللي بيزيد' },
+    { type: 'select', q: 'التفاحة بتقع من فوق لتحت ولا من تحت لفوق؟', options: ['فوق لتحت', 'تحت لفوق'], ans: 'فوق لتحت', hint: 'y بتبدأ بـ 180' },
+    { type: 'input', q: 'إيه اللون بتاع البلوك اللي فيه كلمة "touching"؟', ans: 'لبني', hint: 'بلوكات الاستشعار Sensing' },
+    { type: 'select', q: 'هل البرمجة ممتعة؟', options: ['جداً', 'لأ'], ans: 'جداً', hint: 'أنت مبرمج شاطر!' }
+]; let currentSlide = 0;
+    let currentQ = 0, score = 0, seconds = 0, timer;
+
+    // وظائف السلايدر
+    function showSlide() {
+        const item = detailedExplanation[currentSlide];
+        document.getElementById('slide-content').innerHTML = `
+            <div class="explanation-card">
+                <h3>${item.title}</h3>
+                <div class="code-block">${item.code}</div>
+                <p>${item.desc}</p>
+            </div>
+        `;
+        document.getElementById('slide-num').innerText = `${currentSlide + 1} / 15`;
+        document.getElementById('prevSlide').disabled = currentSlide === 0;
+        document.getElementById('nextSlide').disabled = currentSlide === 14;
+    }
+
+    function moveSlide(dir) {
+        currentSlide += dir;
+        showSlide();
+    }
+
+    window.onload = showSlide;
+
+    // وظائف الاختبار
+    function initQuiz() {
+        if(!document.getElementById('username').value.trim()) return alert("اكتب اسمك يا بطل أولاً!");
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        loadQuestion();
+        timer = setInterval(() => {
+            seconds++;
+            let m = Math.floor(seconds/60), s = seconds%60;
+            document.getElementById('timer-val').innerText = `${m}:${s < 10 ? '0'+s : s}`;
+        }, 1000);
+    }
+
+    function loadQuestion() {
+        const q = questions[currentQ];
+        document.getElementById('progress-text').innerText = `السؤال ${currentQ + 1} / 20`;
+        document.getElementById('q-text').innerText = q.q;
+        document.getElementById('q-code').innerText = q.code;
+        document.getElementById('hint-box').style.display = 'none';
+        
+        if(q.type === 'select') {
+            document.getElementById('options-container').classList.remove('hidden');
+            document.getElementById('input-container').classList.add('hidden');
+            document.getElementById('options-container').innerHTML = '';
+            q.options.forEach(opt => {
+                const b = document.createElement('button');
+                b.className = 'option-btn' + (q.userAns === opt ? ' selected' : '');
+                b.innerText = opt;
+                b.onclick = () => {
+                    document.querySelectorAll('.option-btn').forEach(x => x.classList.remove('selected'));
+                    b.classList.add('selected');
+                    q.userAns = opt;
+                };
+                document.getElementById('options-container').appendChild(b);
+            });
+        } else {
+            document.getElementById('options-container').classList.add('hidden');
+            document.getElementById('input-container').classList.remove('hidden');
+            document.getElementById('user-code-input').value = q.userAns || '';
+        }
+    }
+
+    function handleStep() {
+        const q = questions[currentQ];
+        const val = q.type === 'select' ? q.userAns : document.getElementById('user-code-input').value.trim();
+        if(!val) return alert("جاوب أولاً يا بطل!");
+
+        if(val.toString().toLowerCase() === q.ans.toLowerCase()) {
+            if(!q.done) { score += 10; q.done = true; document.getElementById('score-val').innerText = score; }
+            if(currentQ < 19) { currentQ++; loadQuestion(); } else { finishQuiz(); }
+        } else {
+            document.getElementById('hint-box').style.display = 'block';
+            document.getElementById('hint-text').innerText = q.hint;
+        }
+    }
+
+    function navigate(dir) {
+        if(currentQ + dir >= 0 && currentQ + dir < questions.length) {
+            currentQ += dir;
+            loadQuestion();
+        }
+    }
+
+    function skipQuestion() {
+        if(currentQ < 19) {
+            currentQ++;
+            loadQuestion();
+        } else {
+            finishQuiz();
+        }
+    }
+
+    function revealAnswer() {
+        if(confirm("سيتم خصم 10 نقاط لإظهار الحل، هل أنت موافق؟")) {
+            score -= 10;
+            document.getElementById('score-val').innerText = score;
+            alert("الإجابة الصحيحة هي: " + questions[currentQ].ans);
+        }
+    }
+
+    function finishQuiz() {
+        clearInterval(timer);
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('result-screen').classList.remove('hidden');
+        document.getElementById('congrats-msg').innerText = `عمل رائع يا ${document.getElementById('username').value}! 👑`;
+        document.getElementById('final-stats').innerText = `لقد جمعت ${score} نقطة في زمن ${Math.floor(seconds/60)} دقيقة`;
+    }
+</script>
+</body>
+</html>
