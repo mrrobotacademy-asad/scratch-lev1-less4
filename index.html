@@ -144,7 +144,18 @@
         input[type="text"] {
             width: 80%; padding: 15px; background: rgba(0,0,0,0.3); border: 2px solid var(--primary); color: white; border-radius: var(--radius); text-align: center; font-size: 1.2rem;
         }
-    </style>
+    
+
+.slide-image{
+width:100%;
+max-height:220px;
+object-fit:contain;
+border-radius:15px;
+margin-bottom:15px;
+border:2px solid rgba(255,255,255,0.1);
+background:#111;
+}
+</style>
 </head>
 <body>
 
@@ -218,78 +229,97 @@ const detailedExplanation = [
     {
         title: "العلم الأخضر.. زرار البداية 🚩",
         code: "When Green Flag Clicked",
+        image: "Images/When-Green-Flag-Clicked.png",
         desc: "ده أهم زرار، أول ما بندوس عليه بنقول للكود 'اصحى يا بطل وابدأ الشغل'. من غيره الكائن هيفضل واقف مكانه مش فاهم المفروض يعمل إيه."
     },
     {
         title: "تصفير العداد 0️⃣",
         code: "set score to 0",
+        image: "Images/set-score-to-0.png",
         desc: "ده معناه أول ما اللعبة تبدأ، خلّي النقط صفر عشان اللاعب يبدأ من جديد، ميفضلش واخد السكور بتاع اللعبة اللي فاتت."
     },
     {
         title: "الحلقة اللي مابتخلصش 🔄",
         code: "Forever",
+        image: "Images/Forever.png",
         desc: "دي حلقة سحرية، أي حاجة بنحطها جواها بتفضل تتكرر للأبد، وده اللي بيخلي التفاحة تفضل تقع من السما طول ما اللعبة شغالة."
     },
     {
         title: "النط العشوائي في السما 🎲",
         code: "go to x: pick random",
+        image: "Images/go-to-x-pick-random.png",
         desc: "بيخلي التفاحة تظهر في أي مكان بالعرض (يمين أو شمال) فجأة، وده بيخلي اللعبة فيها مفاجآت واللاعب ميتوقعش مكانها."
     },
     {
         title: "الارتفاع الثابت 🔝",
         code: "y: 180",
+        image: "Images/y-180.png",
         desc: "رقم 180 ده معناه إن التفاحة دايمًا هتبدأ من فوق خالص في الشاشة قبل ما تقع."
     },
     {
         title: "الظهور المفاجئ 👁️",
         code: "show",
+        image: "Images/show.png",
         desc: "البلوك ده بيخلي التفاحة تظهر وتكون باينة للاعب بعد ما كانت مستخبية عشان يقدر يلحقها."
     },
     {
         title: "بداية السقوط 🍎",
         code: "repeat (50)",
+        image: "Images/repeat-50.png",
         desc: "هنا بنقول للتفاحة 'كرري اللي جواكي 50 مرة'، وده اللي هيخليها تنزل لتحت حبة حبة بدل ما تنزل فجأة."
     },
     {
         title: "سرعة النزول 🐾",
         code: "move 10 steps",
+        image: "Images/move-10-steps.png",
         desc: "البلوك ده هو اللي بيخلي التفاحة تتحرك فعلياً، وبما إنها جوه 'التكرار' فهي هتمشي 10 خطوات في كل مرة."
     },
     {
         title: "لحظة الاصطدام 🥣",
         code: "if touching Bowl then",
+        image: "Images/if-touching-Bowl-then.png",
         desc: "ده هو 'الشرط'، البرنامج بيسأل: 'يا تفاحة، هل أنتي دلوقتي لمستي السلطانية اللي تحت؟'."
     },
     {
         title: "مكافأة اللاعب 🏆",
         code: "change score by 1",
+        image: "Images/change-score-by-1.png",
         desc: "لو التفاحة لمست السلطانية فعلاً، بنزود نقطة واحدة للاعب في العداد عشان نحمسه."
     },
     {
         title: "الاختفاء السريع 👻",
         code: "hide",
+        image: "Images/hide.png",
         desc: "بعد ما اللاعب ياخد النقطة، بنقول للتفاحة 'اختفي' عشان تبان إن اللاعب أكلها أو جمعها خلاص."
     },
     {
         title: "الترتيب الذكي 🧱",
         code: "Logic",
+        image: "Images/Logic.png",
         desc: "لاحظ إننا حاطين الـ 'if' جوه الـ 'repeat' عشان البرنامج يشيك على اللمس في كل لحظة والتفاحة بتقع."
     },
     {
         title: "المتغيرات (Variables) 📊",
         code: "Score",
+        image: "Images/Score.png",
         desc: "كلمة 'score' دي زي مخزن بنشيل فيه رقم النقط، ونقدر نغيره في أي وقت زي ما زودناه هنا."
     },
     {
         title: "الألوان بتسهل حياتنا 🎨",
         code: "Categories",
+        image: "Images/Color-Categories.png",
         desc: "البلوكات البرتقالي للتحكم، والصفراء للأحداث، والزرقاء للحركة.. الألوان دي بتخلينا منتهش وإحنا بنبرمج."
     },
     {
         title: "مسرح الأحداث 🎭",
         code: "Stage",
+        image: "Images/Stage.png",
         desc: "كل اللي بنعمله ده بيبان على الشاشة الكبيرة اللي فوق، وده اللي بيخلينا نشوف اللعبة حية قدامنا."
-    }
+    },
+	{ title: " الكود الكامل 🧱", code: "الكل",
+        image: "Images/lesson4-1.jpeg", desc: "النتيجة النهائية", example: "السمكة بتتحرك فى المياه بدون  توقف " },
+		
+		 
 ];
 const questions = [
     { type: 'select', q: 'إيه اللي بيحصل للسكور (score) أول ما ندوس على العلم الأخضر؟', options: ['بيزيد 10', 'بيرجع صفر', 'بيفضل زي ما هو'], ans: 'بيرجع صفر', hint: 'بص على بلوك set score' },
@@ -321,13 +351,17 @@ const questions = [
         document.getElementById('slide-content').innerHTML = `
             <div class="explanation-card">
                 <h3>${item.title}</h3>
+                <img src="${item.image}"
+                  alt="${item.title}"
+                  class="slide-image"
+                  onerror="this.style.display='none'">
                 <div class="code-block">${item.code}</div>
                 <p>${item.desc}</p>
             </div>
         `;
-        document.getElementById('slide-num').innerText = `${currentSlide + 1} / 15`;
+        document.getElementById('slide-num').innerText = `${currentSlide + 1} / 16`;
         document.getElementById('prevSlide').disabled = currentSlide === 0;
-        document.getElementById('nextSlide').disabled = currentSlide === 14;
+        document.getElementById('nextSlide').disabled = currentSlide === 15;
     }
 
     function moveSlide(dir) {
@@ -428,3 +462,5 @@ const questions = [
 </body>
 
 </html>
+
+
